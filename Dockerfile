@@ -1,4 +1,4 @@
-FROM python:3
+FROM debian:stretch
 
 WORKDIR /usr/src/app
 
