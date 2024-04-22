@@ -1,10 +1,9 @@
 import os
-import time
 import socket
 import subprocess
 import pika
 import json
-import time
+from time import sleep
 import sys
 def system_call(command):
     p = subprocess.Popen([command], stdout=subprocess.PIPE, shell=True)
