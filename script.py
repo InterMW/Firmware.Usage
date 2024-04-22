@@ -26,7 +26,7 @@ def action(mac):
     channel.basic_publish(exchange='InterTopic', routing_key='node.usage', body=str(message))
     connection.close()
 
-mac = str(system_call("ifconfig eth0 | grep -Eo ..\(\:..\){5}"))[:-1].decode("utf-8")
+mac = system_call("ifconfig eth0 | grep -Eo ..\(\:..\){5}")[:-1].decode("utf-8")
 
 while(True):
     action(mac)
