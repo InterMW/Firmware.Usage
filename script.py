@@ -10,7 +10,7 @@ def system_call(command):
     p = subprocess.Popen([command], stdout=subprocess.PIPE, shell=True)
     return p.stdout.read()
 
-def send_temp(mac)
+def send_temp(mac):
     printout = str(system_call("vcgencmd measure_temp"))[7:].split("'")[0]
 
     result = []
