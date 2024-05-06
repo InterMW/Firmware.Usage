@@ -10,7 +10,7 @@ def system_call(command):
     p = subprocess.Popen([command], stdout=subprocess.PIPE, shell=True)
     return p.stdout.read()
 
-def send_temp(mac):
+def send_temp(mac,host):
     printout = str(system_call("vcgencmd measure_temp"))[7:].split("'")[0]
 
     result = []
@@ -23,7 +23,7 @@ def send_temp(mac):
         entry["PartName"] = spots[i]
         temps.append(entry)
     outbound = {}
-    outbound["HostName"] = socket.gethostname()
+    outbound["HostName"] = host
     outbound["Timestamp"] = datetime.datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S')
     outbound["Temperatures"] = temps
 
@@ -54,9 +54,9 @@ def action(mac):
     connection.close()
 
 mac = system_call("ifconfig eth0 | grep -Eo ..\(\:..\){5}")[:-1].decode("utf-8")
-
+host = os.environ["host"]
 while(True):
-    action(mac)
-    send_temp(mac)
-    sleep(60)
+    send_temp(mac, host)
+    sleep(60*5)
 
+    #action(mac)
