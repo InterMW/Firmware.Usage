@@ -1,4 +1,4 @@
-FROM python:3
+FROM balenalib/raspberrypi3-debian-python:latest
 
 WORKDIR /usr/src/app
 

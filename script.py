@@ -1,4 +1,3 @@
-import os
 from time import sleep
 import pika
 
@@ -20,21 +19,20 @@ def get_core_count():
 def action():
     value = float(get_usage())
     core_count = get_core_count()
-    credentials = pika.PlainCredentials(os.environ["user"],os.environ["pass"])
+
+    credentials = pika.PlainCredentials(os.environ["USER"],os.environ["PASS"])
     connection = pika.BlockingConnection(pika.ConnectionParameters('rabbit.centurionx.net',5672,'/',credentials))
     channel = connection.channel()
     channel.exchange_declare(exchange='Inter',exchange_type='direct',durable=True)
 
     message = {}
 
-    message["HostName"] = os.environ["host"]
+    message["HostName"] = os.environ["HOST"]
     message["Usage"] = str(value/core_count)
 
     channel.basic_publish(exchange='InterTopic', routing_key='node.usage', body=str(message))
     connection.close()
 
-
 while(True):
     action()
-    sleep(60)
-
+    sleep(60*5)
