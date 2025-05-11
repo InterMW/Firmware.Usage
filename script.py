@@ -1,4 +1,5 @@
 from time import sleep
+import os
 import pika
 
 def get_usage():
