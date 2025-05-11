@@ -1,0 +1,12 @@
+version: "3"
+services:
+  node-usage:
+    image: docker.centurionx.net/node-usage:latest
+    environment:
+    - USER=rabbituser
+    - PASS=rabbituserpass
+    - HOST=${hostname}
+    restart: always
+    volumes:
+      - /proc/cpuinfo:/cpuinfo
+      - /proc/usage:/usage
