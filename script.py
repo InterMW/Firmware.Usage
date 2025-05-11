@@ -6,6 +6,10 @@ def get_usage():
     with open("/usage") as usagefile:
         return usagefile.readline().split(" ")[0]
 
+def get_name():
+    with open("/name") as namefile:
+        return namefile.readline().strip("\n")
+
 def get_core_count():
     with open("/cpuinfo") as cpuinfofile:
         for line in reversed(cpuinfofile.readlines()):
@@ -28,7 +32,7 @@ def action():
 
     message = {}
 
-    message["HostName"] = os.environ["HOST"]
+    message["HostName"] = get_name()
     message["Usage"] = str(value/core_count)
 
     channel.basic_publish(exchange='InterTopic', routing_key='node.usage', body=str(message))
